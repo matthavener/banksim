@@ -4,8 +4,11 @@ Very similar to ants.clj by Rich Hickey. Some trucks (agents) move money on a gr
 
 ## Usage
 
-lein repl
-(start)
+If you don't have `lein`, just [download the script](https://raw.github.com/technomancy/leiningen/stable/bin/lein)
+
+Then run, `lein repl`
+
+Once the repl is loaded, call the start function with `(start)`
 
 ## License
 
