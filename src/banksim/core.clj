@@ -8,11 +8,11 @@
 (def truck-count 50) 
 (def bank-count 100)
 (def bank-low-water 25) ; when a bank drops below this, it needs refill
-(def bank-decay-sleep-ms 5000) ; decay banks every this many ms
-(def bank-decay-amt 25) ; banks decay this many $
+(def bank-decay-sleep-ms 100) ; decay banks every this many ms
+(def bank-decay-amt 5) ; banks decay this many $
 (def central-bank-inc-amt (* bank-count bank-decay-amt)) ; central inc
 (def truck-money-amt 100) ; amt a truck can carry
-(def truck-move-sleep-ms 300) ; trucks move every this many ms
+(def truck-move-sleep-ms 40) ; trucks move every this many ms
 (def running true)
 (def redraw-delay-ms 100) ; redraw
 
@@ -57,7 +57,7 @@
   (when running (send-off *agent* bank-decay))
   (Thread/sleep bank-decay-sleep-ms)
   (doseq [b bank-locs]
-    (dosync (alter (cell-at b) update-in [:bank] - bank-decay-amt)))
+    (dosync (alter (cell-at b) update-in [:bank] - (rand-int bank-decay-amt))))
   (dosync (alter (cell-at central-bank-loc) update-in [:bank] + central-bank-inc-amt)))
 
 (defn vector-to
@@ -178,10 +178,12 @@
 (defn paint-panel
   "paint world with g"
   [g]
-  (dosync 
-   (doseq [x (range grid-size) y (range grid-size)]
-     (let [cell (cell-at [x y])
-           color (color-for-cell cell)
+  (let [cells
+        (dosync
+         (for [x (range grid-size) y (range grid-size)]
+           [x y @(cell-at [x y])]))]
+   (doseq [[x y cell] cells]
+     (let [color (color-for-cell cell)
            money (money-for-cell cell)
            block-x (* x block-size-pix)
            block-y (* y block-size-pix)
