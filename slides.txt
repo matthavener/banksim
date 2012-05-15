@@ -1,0 +1,39 @@
+Clojure
+
+- Lisp
+- Functional (mostly)
+- Runs in JVM
+- Interacts with Java
+- Concurrency primitives
+
+Lisp
+- No syntax
+- Macros
+- Dynamic
+
+Functional
+- No mutation except for refs/agents
+- Persistent datastructures: lists, vectors, sets, hashes
+- Uses copies
+
+Runs in JVM
+- Compiles to Java byte code
+- No interpretation
+- Allows hotspot optimization, same Java GC
+
+Interacts with Java
+- Clojure datastructures implement Java interfaces
+- Direct calls to Java functions
+- Type hints
+- Implement Java interfaces
+
+Concurrency primitives
+- refs
+ - sync
+ - ref-set/alter
+ - commute
+- agents
+ - like an actor
+ - readable
+ - send function for agent to execute
+ - send/send-off
