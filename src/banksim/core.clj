@@ -158,8 +158,8 @@
   "agent fun for trucks"
   [truck-loc]
   (do
-    (Thread/sleep truck-move-sleep-ms)
     (when running (send-off *agent* truckate))
+    (Thread/sleep truck-move-sleep-ms)
     (behave-truck truck-loc)))
 
 (defn color-for-cell
