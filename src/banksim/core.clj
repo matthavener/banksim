@@ -177,7 +177,7 @@
 
 (defn paint-panel
   "paint world with g"
-  [g]
+  [^Graphics g]
   (let [cells
         (dosync
          (for [x (range grid-size) y (range grid-size)]
